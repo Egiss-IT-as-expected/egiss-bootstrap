@@ -24,7 +24,7 @@ for t in gh ansible; do command -v "$t" >/dev/null || brew install "$t"; done
 
 if ! gh auth status >/dev/null 2>&1; then
   echo "Logging in to GitHub, you need access to the $SETUP_REPO repository"
-  gh auth login --hostname github.com --git-protocol https --web
+  gh auth login --hostname github.com --git-protocol https --web --scopes user:email
 fi
 gh auth setup-git
 
