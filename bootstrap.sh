@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SETUP_REPO="Egiss-IT-as-expected/egiss-dev-setup"
+SETUP_DIR="$HOME/.egiss-dev-setup"
+
+[ -t 0 ] || exec < /dev/tty
+
+if ! xcode-select -p >/dev/null 2>&1; then
+  echo "Installing Xcode Command Line Tools, accept the dialog and wait for it to finish"
+  xcode-select --install
+  until xcode-select -p >/dev/null 2>&1; do sleep 5; done
+fi
+
+BREW=/opt/homebrew/bin/brew
+[ "$(uname -m)" = "x86_64" ] && BREW=/usr/local/bin/brew
+if [ ! -x "$BREW" ]; then
+  echo "Installing Homebrew"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$("$BREW" shellenv)"
+touch "$HOME/.zprofile"
+grep -q 'brew shellenv' "$HOME/.zprofile" || echo "eval \"\$($BREW shellenv)\"" >> "$HOME/.zprofile"
+
+command -v gh >/dev/null || brew install gh
+
+if ! gh auth status >/dev/null 2>&1; then
+  echo "Logging in to GitHub, you need access to the $SETUP_REPO repository"
+  gh auth login --hostname github.com --git-protocol https --web
+fi
+gh auth setup-git
+
+if [ ! -d "$SETUP_DIR/.git" ]; then
+  gh repo clone "$SETUP_REPO" "$SETUP_DIR"
+fi
+
+exec "$SETUP_DIR/setup.sh"
