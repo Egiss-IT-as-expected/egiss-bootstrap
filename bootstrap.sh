@@ -22,7 +22,7 @@ eval "$("$BREW" shellenv)"
 touch "$HOME/.zprofile"
 grep -q 'brew shellenv' "$HOME/.zprofile" || echo "eval \"\$($BREW shellenv)\"" >> "$HOME/.zprofile"
 
-command -v gh >/dev/null || brew install gh
+for t in gh ansible; do command -v "$t" >/dev/null || brew install "$t"; done
 
 if ! gh auth status >/dev/null 2>&1; then
   echo "Logging in to GitHub, you need access to the $SETUP_REPO repository"
@@ -35,4 +35,5 @@ if [ ! -d "$SETUP_DIR/.git" ]; then
   gh repo clone "$SETUP_REPO" "$SETUP_DIR"
 fi
 
-exec "$SETUP_DIR/setup.sh"
+cd "$SETUP_DIR"
+exec ansible-playbook setup.yml --ask-become-pass
