@@ -8,4 +8,4 @@ curl -fsSL https://raw.githubusercontent.com/Egiss-IT-as-expected/egiss-bootstra
 
 It installs the Xcode Command Line Tools, Homebrew and the GitHub CLI, logs you in to
 GitHub, then clones the private [egiss-dev-setup](https://github.com/Egiss-IT-as-expected/egiss-dev-setup)
-repository to `~/.egiss-dev-setup` and runs its `setup.sh`. Everything else lives there.
+repository to `~/projects/egiss-dev-setup` and runs its `setup.sh`. Everything else lives there.

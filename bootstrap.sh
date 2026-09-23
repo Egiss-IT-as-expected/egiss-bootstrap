@@ -2,7 +2,7 @@
 set -euo pipefail
 
 SETUP_REPO="Egiss-IT-as-expected/egiss-dev-setup"
-SETUP_DIR="$HOME/.egiss-dev-setup"
+SETUP_DIR="$HOME/projects/egiss-dev-setup"
 
 [ -t 0 ] || exec < /dev/tty
 
@@ -31,6 +31,7 @@ fi
 gh auth setup-git
 
 if [ ! -d "$SETUP_DIR/.git" ]; then
+  mkdir -p "$(dirname "$SETUP_DIR")"
   gh repo clone "$SETUP_REPO" "$SETUP_DIR"
 fi
 
