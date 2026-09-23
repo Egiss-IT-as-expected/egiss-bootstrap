@@ -4,8 +4,6 @@ set -euo pipefail
 SETUP_REPO="Egiss-IT-as-expected/egiss-dev-setup"
 SETUP_DIR="$HOME/projects/egiss-dev-setup"
 
-[ -t 0 ] || exec < /dev/tty
-
 if ! xcode-select -p >/dev/null 2>&1; then
   echo "Installing Xcode Command Line Tools, accept the dialog and wait for it to finish"
   xcode-select --install

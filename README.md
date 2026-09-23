@@ -3,7 +3,7 @@
 Sets up a new Mac for Egiss development. Open Terminal and run:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/Egiss-IT-as-expected/egiss-bootstrap/main/bootstrap.sh | bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/Egiss-IT-as-expected/egiss-bootstrap/main/bootstrap.sh)"
 ```
 
 It installs the Xcode Command Line Tools, Homebrew and the GitHub CLI, logs you in to
